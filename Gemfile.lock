@@ -1,0 +1,52 @@
+PATH
+  remote: .
+  specs:
+    example-ruby-project (0.1.0)
+      oj (~> 2.15)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    ast (2.2.0)
+    diff-lcs (1.2.5)
+    oj (2.15.0)
+    parser (2.3.1.0)
+      ast (~> 2.2)
+    powerpack (0.1.1)
+    rainbow (2.1.0)
+    rake (11.1.2)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.4)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    rubocop (0.40.0)
+      parser (>= 2.3.1.0, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-progressbar (1.8.1)
+    rubygems-tasks (0.2.4)
+    unicode-display_width (1.0.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  example-ruby-project!
+  rake
+  rspec
+  rubocop
+  rubygems-tasks
+
+BUNDLED WITH
+   1.11.2
