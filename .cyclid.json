@@ -1,0 +1,94 @@
+{
+  "name": "example-ruby-project",
+  "environment": {
+    "os": "ubuntu_trusty",
+    "packages": [
+      "git",
+      "bundler"
+    ]
+  },
+  "sources": [
+    {
+      "type": "git",
+      "url": "https://github.com/Liqwyd/example-ruby-project.git"
+    }
+  ],
+  "stages": [
+    {
+      "name": "bundle-install",
+      "steps": [
+        {
+          "action": "command",
+          "cmd": "bundle install --path vendor/bundle",
+          "path": "%{workspace}/example-ruby-project"
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "steps": [
+        {
+          "action": "command",
+          "cmd": "bundle exec rake rubocop",
+          "path": "%{workspace}/example-ruby-project"
+        },
+        {
+          "action": "command",
+          "cmd": "bundle exec rake spec",
+          "path": "%{workspace}/example-ruby-project"
+        }
+      ]
+    },
+    {
+      "name": "build",
+      "steps": [
+        {
+          "action": "command",
+          "cmd": "bundle exec rake build",
+          "path": "%{workspace}/example-ruby-project"
+        }
+      ]
+    },
+    {
+      "name": "success",
+      "steps": [
+        {
+          "action": "email",
+          "to": "bob@example.com",
+          "subject": "%{job_name} successful",
+          "color": "green",
+          "message": "Job %{organization}/%{job_name} (job #%{job_id}) completed successfully."
+        }
+      ]
+    },
+    {
+      "name": "failure",
+      "steps": [
+        {
+          "action": "email",
+          "to": "bob@example.com",
+          "subject": "%{job_name} failed",
+          "color": "red",
+          "message": "Job %{organization}/%{job_name} (job #%{job_id}) failed."
+        }
+      ]
+    }
+  ],
+  "sequence": [
+    {
+      "stage": "bundle-install",
+      "on_success": "test",
+      "on_failure": "failure"
+    },
+    {
+      "stage": "test",
+      "on_success": "build",
+      "on_failure": "failure"
+    },
+    {
+      "stage": "build",
+      "on_success": "success",
+      "on_failure": "failure"
+    }
+  ]
+}
