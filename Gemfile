@@ -4,7 +4,7 @@ gemspec
 
 group :development do
   gem 'rake'
-  gem 'rubocop'
+  gem 'rubocop', '= 0.39.0'
   gem 'rspec'
   gem 'rubygems-tasks'
 end
