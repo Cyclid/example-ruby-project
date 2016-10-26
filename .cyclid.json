@@ -53,10 +53,7 @@
       "name": "success",
       "steps": [
         {
-          "action": "email",
-          "to": "bob@example.com",
-          "subject": "%{job_name} successful",
-          "color": "green",
+          "action": "log",
           "message": "Job %{organization}/%{job_name} (job #%{job_id}) completed successfully."
         }
       ]
@@ -65,10 +62,7 @@
       "name": "failure",
       "steps": [
         {
-          "action": "email",
-          "to": "bob@example.com",
-          "subject": "%{job_name} failed",
-          "color": "red",
+          "action": "log",
           "message": "Job %{organization}/%{job_name} (job #%{job_id}) failed."
         }
       ]
