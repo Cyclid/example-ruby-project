@@ -10,7 +10,7 @@
   "sources": [
     {
       "type": "git",
-      "url": "https://github.com/Liqwyd/example-ruby-project.git"
+      "url": "https://github.com/Cyclid/example-ruby-project.git"
     }
   ],
   "stages": [
@@ -36,6 +36,10 @@
           "action": "command",
           "cmd": "bundle exec rake spec",
           "path": "%{workspace}/example-ruby-project"
+        },
+        {
+          "action": "simplecov",
+          "path": "%{workspace}/example-ruby-project/coverage/coverage.json"
         }
       ]
     },
@@ -71,13 +75,15 @@
   "sequence": [
     {
       "stage": "bundle-install",
-      "on_success": "test",
       "on_failure": "failure"
     },
     {
       "stage": "test",
-      "on_success": "build",
       "on_failure": "failure"
+    },
+    {
+      "stage": "failure",
+      "only_if": "%{simplecov_coverage} < 90%"
     },
     {
       "stage": "build",
