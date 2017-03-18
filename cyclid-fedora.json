@@ -1,0 +1,96 @@
+{
+  "name": "example-ruby-project",
+  "environment": {
+    "os": "fedora_25",
+    "packages": [
+      "git",
+      "ruby",
+      "ruby-devel",
+      "rubygem-bundler",
+      "redhat-rpm-config"
+    ],
+    "groups": [
+      "Development Tools"
+    ]
+  },
+  "sources": [
+    {
+      "type": "git",
+      "url": "https://github.com/Cyclid/example-ruby-project.git"
+    }
+  ],
+  "stages": [
+    {
+      "name": "bundle-install",
+      "steps": [
+        {
+          "action": "command",
+          "cmd": "bundle install --path vendor/bundle",
+          "path": "%{workspace}/example-ruby-project"
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "steps": [
+        {
+          "action": "command",
+          "cmd": "bundle exec rake rubocop",
+          "path": "%{workspace}/example-ruby-project"
+        },
+        {
+          "action": "command",
+          "cmd": "bundle exec rake spec",
+          "path": "%{workspace}/example-ruby-project"
+        },
+        {
+          "action": "simplecov",
+          "path": "%{workspace}/example-ruby-project/coverage/coverage.json"
+        }
+      ]
+    },
+    {
+      "name": "build",
+      "steps": [
+        {
+          "action": "command",
+          "cmd": "bundle exec rake build",
+          "path": "%{workspace}/example-ruby-project"
+        }
+      ]
+    },
+    {
+      "name": "success",
+      "steps": [
+        {
+          "action": "log",
+          "message": "Job %{organization}/%{job_name} (job #%{job_id}) completed successfully."
+        }
+      ]
+    },
+    {
+      "name": "failure",
+      "steps": [
+        {
+          "action": "log",
+          "message": "Job %{organization}/%{job_name} (job #%{job_id}) failed."
+        }
+      ]
+    }
+  ],
+  "sequence": [
+    {
+      "stage": "bundle-install",
+      "on_failure": "failure"
+    },
+    {
+      "stage": "test",
+      "on_failure": "failure"
+    },
+    {
+      "stage": "build",
+      "on_success": "success",
+      "on_failure": "failure"
+    }
+  ]
+}
