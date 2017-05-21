@@ -79,11 +79,8 @@
     },
     {
       "stage": "test",
+      "fail_if": "%{simplecov_coverage} < 90%",
       "on_failure": "failure"
-    },
-    {
-      "stage": "failure",
-      "only_if": "%{simplecov_coverage} < 90%"
     },
     {
       "stage": "build",
